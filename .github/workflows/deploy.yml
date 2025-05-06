@@ -40,9 +40,7 @@ jobs:
       - name: Extract Version from PR Number
         id: extract_version
         run: |
-          VERSION=${{ github.event.pull_request.number }} 
-          echo "VERSION=${VERSION}" >> $GITHUB_ENV
-          echo "Extracted Version: ${VERSION}"
+          VERSION=${{0}}
 
       - name: Generate .env.dev file
         run: |
