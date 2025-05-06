@@ -37,10 +37,9 @@ jobs:
         with:
           credentials_json: '${{ env.GCP_CREDENTIALS }}'
 
-      - name: Extract Version from PR Number
-        id: extract_version
+      - name: Set Version
         run: |
-          VERSION=${{0}}
+          echo "VERSION=latest" >> $GITHUB_ENV
 
       - name: Generate .env.dev file
         run: |
@@ -50,10 +49,13 @@ jobs:
         run: |-
           gcloud auth configure-docker '${{ env.REGION }}-docker.pkg.dev'
           
-      - name: 'Build Docker Image' # New step to build the image
-
+      - name: 'Build Docker Image'
         run: |-
           DOCKER_TAG="${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/${{ env.IMAGE_NAME }}:${{ github.sha }}"
+          if [ -z "${{ env.PROJECT_ID }}" ]; then
+            echo "Error: PROJECT_ID is not set."
+            exit 1
+          fi
           docker build -t "${DOCKER_TAG}" --build-arg ENV=dev .
 
       - name: 'Push Docker Image'
@@ -67,4 +69,4 @@ jobs:
           service: '${{ env.SERVICE }}'
           region: '${{ env.REGION }}'
           image: "${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/${{ env.IMAGE_NAME }}:${{ github.sha }}"
-          env_vars: VERSION=${VERSION}
+          env_vars: VERSION=${{ env.VERSION }}
