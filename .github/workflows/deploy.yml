@@ -3,16 +3,15 @@
 
 name: 'Build and Deploy to Cloud Run'
 on:
-  pull_request_review:
-    types: [submitted, edited] # submitted, reviewer edits the PR (ex comments)
-  workflow_dispatch: # This enables manual triggers
-
+  push:
+    branches:
+      - main
 env:
 
   PROJECT_ID: ${{ secrets.PROJECT_ID }}
   REGION: ${{ secrets.REGION_LOC_1 }}
-  SERVICE: ${{ secrets.SERVICE }}
-  IMAGE_NAME: 'map-dragon_img'
+  SERVICE: 'mrgn-service'
+  IMAGE_NAME: 'mrgn-img'
   GCP_CREDENTIALS:  ${{ secrets.GCP_CREDENTIALS }}
 
 
@@ -47,10 +46,7 @@ jobs:
 
       - name: Generate .env.dev file
         run: |
-          echo "VITE_CLIENT_ID = ${{ secrets.VITE_CLIENT_ID }}" > .env.dev
-          echo "VITE_SEARCH_ENDPOINT = ${{ secrets.VITE_SEARCH_ENDPOINT }}" >> .env.dev
-          echo "VITE_VOCAB_ENDPOINT= ${{ secrets.VITE_VOCAB_ENDPOINT }}" >> .env.dev
-          echo "VITE_MAPDRAGON_VERSION=${VERSION}" >> .env.dev
+          echo "placeholder=dev" > .env.dev
       
       - name: 'Docker Auth'
         run: |-
