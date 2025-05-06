@@ -56,12 +56,12 @@ jobs:
             echo "Error: PROJECT_ID is not set."
             exit 1
           fi
+          echo "DOCKER_TAG=${DOCKER_TAG}" >> $GITHUB_ENV
           docker build -t "${DOCKER_TAG}" --build-arg ENV=dev .
 
       - name: 'Push Docker Image'
         run: |-
-          DOCKER_TAG="${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/${{ env.IMAGE_NAME }}:${{ github.sha }}"
-          docker push "${DOCKER_TAG}"
+          docker push "${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/${{ env.IMAGE_NAME }}:${{ github.sha }}"
 
       - name: 'Deploy to Cloud Run'
         uses: 'google-github-actions/deploy-cloudrun@v2'
