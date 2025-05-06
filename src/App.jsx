@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-    sup boi1
+    sup boi!
     </>
   )
 }
