@@ -1,7 +1,7 @@
 // src/components/ObjktGallery.jsx
 import React, { useEffect, useState } from 'react';
 import { GraphQLClient, gql } from 'graphql-request';
-import { GalleryItem } from './GalleryItem';
+import GalleryItem from './GalleryItem';
 
 const endpoint = 'https://data.objkt.com/v3/graphql';
 
@@ -43,13 +43,14 @@ export default function ObjktGallery({ contractAddress }) {
   return (
     <div style={{
       display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fill,minmax(150px,1fr))',
-      gap: '1rem'
+      gridTemplateColumns: 'repeat(4,minmax(150px,1fr))',
+      gap: '.5rem',
+      // columnGap
     }}>
       {items.map((nft, index) => (
         <div key={index}>
           <GalleryItem item={nft} />
-        +</div>
+        </div>
       ))}
     </div>
   );
