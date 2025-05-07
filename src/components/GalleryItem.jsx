@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 async function getFileType(url) {
@@ -18,11 +18,12 @@ function replaceSpaces(str) {
 
 export default function GalleryItem({ item }) {
   const navigate = useNavigate();
+  const { collection } = useParams();
 
   const handleClick = async () => {
     const fileType = await getFileType(item.full);
     const name = replaceSpaces(item.name);
-    navigate(`/${name}`, { state: { item, fileType } });
+    navigate(`/${collection}/${name}`, { state: { item, fileType } });
   };
 
   return (
@@ -38,7 +39,8 @@ export default function GalleryItem({ item }) {
         style={{
           overflow: 'hidden',
           width: '100%',
-          height: '12rem',
+          height: '100%',
+          minHeight: '12rem',
           border: '2px solid black',
           borderRadius: '5px',
         }}
@@ -46,7 +48,12 @@ export default function GalleryItem({ item }) {
         <img
           src={item.thumbnail}
           alt={item.name}
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          style={{ 
+            width: '100%', 
+            height: '100%', 
+            objectFit: 'cover',
+            transition: 'opacity 0.3s ease',
+          }}
         />
       </div>
       <h4>{item.name}</h4>

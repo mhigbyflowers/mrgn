@@ -1,18 +1,12 @@
-import { useState } from 'react'
 import './App.css'
-
-import ObjktGallery from './components/ObjktGallery.jsx'
+import HomePage from './components/HomePage'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-    sup boi!
-    <ObjktGallery contractAddress="KT1NMayQZJMuZFTPSSskTqj82rhogNjgStSw" />
+      <HomePage />
     </>
   )
 }
 
 export default App
-ObjktGallery

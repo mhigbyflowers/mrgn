@@ -1,23 +1,28 @@
 import React, { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 export default function ItemDetail() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { collection } = useParams();
   const { item, fileType } = location.state || {};
 
   useEffect(() => {
     if (!item || !fileType) {
-      navigate('/'); // Redirect to home if state is missing
+      navigate(`/${collection}`); // Redirect to collection view if state is missing
     }
-  }, [item, fileType, navigate]);
+  }, [item, fileType, navigate, collection]);
+
+  const handleBack = () => {
+    navigate(`/${collection}`);
+  };
 
   const isVideo = fileType && fileType.startsWith('video');
 
   return (
     <div style={{ textAlign: 'center' }}>
       <button
-        onClick={() => navigate('/')}
+        onClick={handleBack}
         style={{
           position: 'absolute',
           left: '1rem',
