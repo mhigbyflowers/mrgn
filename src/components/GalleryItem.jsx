@@ -21,8 +21,8 @@ export default function GalleryItem({ item }) {
 
   const handleClick = async () => {
     const fileType = await getFileType(item.full);
-    const name = item.name;
-    navigate(`/item/${item.name}`, { state: { item, fileType } });
+    const name = replaceSpaces(item.name);
+    navigate(`/${name}`, { state: { item, fileType } });
   };
 
   return (

@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function ItemDetail() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { item, fileType } = location.state;
+  const { item, fileType } = location.state || {};
+
+  useEffect(() => {
+    if (!item || !fileType) {
+      navigate('/'); // Redirect to home if state is missing
+    }
+  }, [item, fileType, navigate]);
 
   const isVideo = fileType && fileType.startsWith('video');
 
@@ -27,22 +33,26 @@ export default function ItemDetail() {
       >
         &lt;-back
       </button>
-      <h1 style={{ fontSize: '2rem', marginBottom: '1rem' }}>{item.name}</h1>
-      <p style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>{item.desc}</p>
-      <div style={{ textAlign: 'center', padding: '1rem' }}>
-        {isVideo ? (
-          <video autoPlay loop style={{ height: '80vh', maxHeight: '80vw' }}>
-            <source src={item.full} type={fileType} />
-            Your browser does not support the video tag.
-          </video>
-        ) : (
-          <img 
-            src={item.full}
-            alt={item.name}
-            style={{ height: '80vh', maxHeight: '80vw' }}
-          />
-        )}
-      </div>
+      {item && (
+        <>
+          <h1 style={{ fontSize: '2rem', marginBottom: '1rem' }}>{item.name}</h1>
+          <p style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>{item.desc}</p>
+          <div style={{ textAlign: 'center', padding: '1rem' }}>
+            {isVideo ? (
+              <video autoPlay loop style={{ height: '80vh', maxHeight: '80vw' }}>
+                <source src={item.full} type={fileType} />
+                Your browser does not support the video tag.
+              </video>
+            ) : (
+              <img 
+                src={item.full}
+                alt={item.name}
+                style={{ height: '80vh', maxHeight: '80vw' }}
+              />
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 }
