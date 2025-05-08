@@ -6,8 +6,9 @@ export default function HomePage() {
         { name: 'Hue', kt1: 'KT1Shm1ELtPCpZ5yaUeXJuVSek8x3UuymLuJ' },
         { name: 'YardWork', kt1: 'KT1NMayQZJMuZFTPSSskTqj82rhogNjgStSw' },
         { name: 'YY.MM.DD-@-HH.MM.SS', kt1: 'KT1FqzZT7RjgyEKAQmY46oYK4GE2hoxQGCz2' },
+        { name: 'Timonds', kt1: 'KT1HDUSHEW1pKSbdHUWW9awkuKGJFsQvfQbq' },
         { name: 'net', kt1: 'KT1BdfVyJMvFCCJd6PBzcJjPERLgXfwRiRTN' },
-        { name: 'RealTime', kt1: 'KT1FqzZT7RjgyEKAQmY46oYK4GE2hoxQGCz2' },
+
     ]
     return (
         <div style={{ textAlign: 'center', padding: '1rem' }}>
