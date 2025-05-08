@@ -7,6 +7,7 @@ export default function HomePage() {
         { name: 'YardWork', kt1: 'KT1NMayQZJMuZFTPSSskTqj82rhogNjgStSw' },
         { name: 'YY.MM.DD-@-HH.MM.SS', kt1: 'KT1FqzZT7RjgyEKAQmY46oYK4GE2hoxQGCz2' },
         { name: 'net', kt1: 'KT1BdfVyJMvFCCJd6PBzcJjPERLgXfwRiRTN' },
+        { name: 'RealTime', kt1: 'KT1FqzZT7RjgyEKAQmY46oYK4GE2hoxQGCz2' },
     ]
     return (
         <div style={{ textAlign: 'center', padding: '1rem' }}>
