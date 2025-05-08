@@ -1,44 +1,37 @@
 # mrgn
+
 [See the project live](https://mrgn-service-1084776966019.us-central1.run.app/)
 
-## Project Overview
+## Project Overview & Intent
 
-**mrgn** is a modern React web application that serves as a dynamic NFT collection browser for the Tezos blockchain. Users can explore curated NFT collections, view detailed information about individual tokens, and seamlessly navigate between collections and items.
+mrgn is a quick side project that dually serves as an art portfolio and a tech demo. Built on React and deployed via Docker and Google Cloud Run, it showcases stills from my generative video art minted as NFTs on the Tezos blockchain (which I treat as a pseudo-database). Users can browse collections of my work, view detailed token metadata, and experience a seamless gallery interface—all while illustrating modern web and DevOps best practices.
 
 ## Features
 
-- **Dynamic Routing:** Utilizes React Router v6 for clean, parameterized URLs (e.g., `/KT1.../token-name`), enabling direct linking to collections and specific NFTs.
-- **GraphQL Integration:** Fetches live NFT data from the [objkt.com GraphQL API](https://data.objkt.com/v3/graphql), demonstrating advanced use of GraphQL queries and client-side data management.
-- **Responsive Gallery:** Displays NFTs in a responsive, grid-based gallery with smooth image transitions and interactive hover effects.
-- **Detail Views:** Clicking an NFT opens a detail page, leveraging React Router state and URL parameters for efficient data passing and deep linking.
-- **IPFS Media Handling:** Automatically converts IPFS URIs to HTTP gateways for seamless media display.
-- **Component Architecture:** Built with reusable, modular React components for maintainability and scalability.
-- **Modern UI/UX:** Clean, minimal interface with intuitive navigation and subtle animations for enhanced user experience.
+I implemented:
+- **Dynamic Routing** with React Router v6 to create clean URLs for collections and artworks.
+- **GraphQL data fetching** using `graphql-request` to pull live NFT information from objkt.com.
+- **Responsive gallery layout** that adjusts to any screen size and shows smooth hover and transition effects.
+- **Detail view pages** that use React Router state and URL parameters to display token metadata and media.
+- **IPFS URI handling** to convert decentralized links into standard HTTP gateways for reliable media loading.
+- **Reusable components** structured to make adding new collections or media types straightforward.
+- **User-focused UI** with a dark theme and simple animations to highlight the artwork.
 
-## Technical Achievements
+## Technical Highlights
 
-- **Advanced Routing:** Implements nested and dynamic routes using React Router, supporting both collection and item-level navigation.
-- **GraphQL Data Fetching:** Integrates `graphql-request` for efficient, type-safe data retrieval from decentralized sources.
-- **State Management:** Uses React hooks (`useState`, `useEffect`, `useParams`, `useNavigate`) for stateful logic and navigation.
-- **Performance Optimization:** Fetches only necessary data per route, minimizing network usage and improving load times.
-- **Error Handling:** Gracefully manages API errors and missing data, ensuring robust user experience.
-- **Custom Media Handling:** Detects and adapts to different NFT media types (images, videos, etc.) using HTTP header inspection.
+- Nested and dynamic routes support both collection-level and token-level navigation.
+- Type-safe GraphQL queries with `graphql-request` for efficient data retrieval.
+- State and side-effect management via React hooks (`useState`, `useEffect`, `useParams`, `useNavigate`).
+- Performance optimizations: fetches only the data needed for each view, reducing load times.
+- Robust error handling with fallback UI states for missing or malformed data.
+- Media-type detection via HTTP header inspection to adapt rendering (image vs. video).
 
 ## DevOps & Deployment
 
-- **Dockerized Application:** The app is fully containerized with a multi-stage Dockerfile, enabling consistent builds and deployments across environments.
-- **CI/CD Integration:** Automated build and deployment pipeline using GitHub Actions. On every push to `main`, the workflow builds the Docker image, pushes it to Google Artifact Registry, and deploys to Google Cloud Run.
-- **Nginx Static Serving:** Uses a custom Nginx configuration to serve the built React app efficiently as a static site.
-- **Cloud Native:** Deploys to Google Cloud Run for scalable, managed hosting with zero-downtime deployments.
-- **Environment Management:** Supports environment variables and build arguments for flexible configuration across development and production.
-- **Linting & Code Quality:** Enforced with ESLint and modern JavaScript standards for maintainable, high-quality code.
+- **Dockerized Builds:** Multi-stage Dockerfile ensures consistent build artifacts and runtime environments.
+- **CI/CD Pipeline:** GitHub Actions workflow automatically builds, tags, and pushes Docker images on each push to `main`, then deploys to Google Cloud Run.
+- **Static Asset Serving:** Custom Nginx configuration serves the optimized React build for fast, cache-friendly delivery.
+- **Cloud Native:** Zero-downtime, auto-scaling deployments on Google Cloud Run handle traffic seamlessly.
+- **Configuration Management:** Environment variables and build arguments enable flexible setups for development, staging, and production.
+- **Quality Controls:** ESLint and Prettier enforce code consistency and readability throughout the codebase.
 
-## Usage
-
-1. **Home Page:** Browse a curated list of NFT collections.
-2. **Collection View:** Click a collection to view all NFTs within it.
-3. **Item Detail:** Click an NFT to see detailed information and media.
-
----
-
-This project demonstrates proficiency in modern React development, API integration, blockchain-based data visualization, and DevOps best practices including Docker, CI/CD automation, and cloud deployment.
