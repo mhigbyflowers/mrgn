@@ -23,6 +23,15 @@
 - **Error Handling:** Gracefully manages API errors and missing data, ensuring robust user experience.
 - **Custom Media Handling:** Detects and adapts to different NFT media types (images, videos, etc.) using HTTP header inspection.
 
+## DevOps & Deployment
+
+- **Dockerized Application:** The app is fully containerized with a multi-stage Dockerfile, enabling consistent builds and deployments across environments.
+- **CI/CD Integration:** Automated build and deployment pipeline using GitHub Actions. On every push to `main`, the workflow builds the Docker image, pushes it to Google Artifact Registry, and deploys to Google Cloud Run.
+- **Nginx Static Serving:** Uses a custom Nginx configuration to serve the built React app efficiently as a static site.
+- **Cloud Native:** Deploys to Google Cloud Run for scalable, managed hosting with zero-downtime deployments.
+- **Environment Management:** Supports environment variables and build arguments for flexible configuration across development and production.
+- **Linting & Code Quality:** Enforced with ESLint and modern JavaScript standards for maintainable, high-quality code.
+
 ## Usage
 
 1. **Home Page:** Browse a curated list of NFT collections.
@@ -31,4 +40,4 @@
 
 ---
 
-This project demonstrates proficiency in modern React development, API integration, and blockchain-based data visualization.
+This project demonstrates proficiency in modern React development, API integration, blockchain-based data visualization, and DevOps best practices including Docker, CI/CD automation, and cloud deployment.
