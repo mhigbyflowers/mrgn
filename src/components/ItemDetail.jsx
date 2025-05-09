@@ -7,6 +7,10 @@ export default function ItemDetail() {
   const { collection } = useParams();
   const { item, fileType } = location.state || {};
 
+  if ( collection === "undefined" || collection === "null") {
+    collection = "hicetnunc"; // Default collection if none is provided
+  }
+
   useEffect(() => {
     if (!item || !fileType) {
       navigate(`/${collection}`); // Redirect to collection view if state is missing
@@ -18,7 +22,8 @@ export default function ItemDetail() {
   };
 
   const isVideo = fileType && fileType.startsWith('video');
-
+  console.log(item, "item");
+  
   return (
     <div style={{ textAlign: 'center' }}>
       <button
@@ -56,6 +61,7 @@ export default function ItemDetail() {
               />
             )}
           </div>
+          <a href={"https://objkt.com/tokens/" + collection + "/" + item.tokenId} target="_blank" rel="noopener noreferrer">Objkt</a>
         </>
       )}
     </div>

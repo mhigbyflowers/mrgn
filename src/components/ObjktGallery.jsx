@@ -53,6 +53,7 @@ export default function ObjktGallery() {
             name: t.name || 'Unknown',
             desc: t.description || 'No description',
             collectionName: t.fa?.name || 'Unknown Collection',
+            tokenId: t.token_id,
           }));
         setItems(cleaned);
       })

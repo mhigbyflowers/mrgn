@@ -35,7 +35,10 @@ const GET_TOKENS = gql`
 `;
 
 export default function Gallery({ customHolder, customFa, title }) {
-  const { collection } = useParams();
+  let { collection } = useParams();
+    if ( collection === "undefined" || collection === "null") {
+    collection = "hicetnunc"; // Default collection if none is provided
+  }
   const navigate = useNavigate();
   const [items, setItems] = useState([]);
   // Use props for custom gallery, or params for collection gallery
@@ -100,6 +103,7 @@ export default function Gallery({ customHolder, customFa, title }) {
           name: t.name || 'Unknown',
           desc: t.description || 'No description',
           collectionName: t.fa?.name || title || 'Custom Gallery',
+          tokenId: t.token_id,
         }));
         setItems(cleaned);
       })

@@ -54,7 +54,7 @@ export default function ObjktContracts() {
                         fontSize: '1.5rem',
                         marginBottom: '1rem',
                     }}
-                    onClick={() => window.location.href = `/hic-et-nunc`}
+                    onClick={() => window.location.href = `/hicetnunc`}
                 >
                     hic et nunc 
                 </h1>

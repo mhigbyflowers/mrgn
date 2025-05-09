@@ -11,7 +11,7 @@ const AppRoutes = () => (
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="/:collection" element={<Gallery />} />
-      <Route path="/hic-et-nunc" element={
+      <Route path="/hicetnunc" element={
         <Gallery
           customFa="KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton"
           customHolder="tz1YrA1XwPqiVVC7L2hVapAbq2bm9aaGZtKQ"

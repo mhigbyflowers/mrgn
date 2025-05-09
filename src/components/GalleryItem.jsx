@@ -17,10 +17,19 @@ function replaceSpaces(str) {
 }
 
 export default function GalleryItem({ item }) {
-  const navigate = useNavigate();
-  const { collection } = useParams();
 
+  const navigate = useNavigate();
+  let { collection } = useParams();
+  console.log(collection, "collection");
+  
+  if ( collection === undefined || collection === null) {
+    collection = "hicetnunc";
+ provided
+  }
+
+  
   const handleClick = async () => {
+    console.log(collection,"collection");
     const fileType = await getFileType(item.full);
     const name = replaceSpaces(item.name);
     navigate(`/${collection}/${name}`, { state: { item, fileType } });
