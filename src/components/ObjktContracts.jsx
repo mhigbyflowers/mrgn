@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { GraphQLClient, gql } from 'graphql-request';
+import  CustomGallery  from './CustomGallery';
 
 const endpoint = 'https://data.objkt.com/v3/graphql';
 const GET_CREATOR_COLLECTIONS = gql`
@@ -16,7 +17,7 @@ const GET_CREATOR_COLLECTIONS = gql`
   }
 `;
 
-export default function HomePage() {
+export default function ObjktContracts() {
     const [collections, setCollections] = useState([]);
     const creator = "tz1YrA1XwPqiVVC7L2hVapAbq2bm9aaGZtKQ";
 
@@ -31,14 +32,40 @@ export default function HomePage() {
     }, []);
 
     return (
-        <div style={{ textAlign: 'center', padding: '1rem' }}>
+        <div style={{ textAlign: 'right', padding: '.5rem' }}>
+            <style>
+                {`
+                .collection-link {
+                    color: inherit;
+                    // text-decoration: underline;
+                    transition: color 0.2s;
+                    cursor: pointer;
+                }
+                .collection-link:hover {
+                    color:rgba(136, 139, 189, 0.43);
+                }
+                `}
+            </style>
+            <h1 style={{ textAlign:'left',fontSize: '2rem', marginBottom: '1rem', marginTop:'0' }}>NFTs (tezo)</h1>
+            <div style={{ margin: '1rem' }}>
+                <h1
+                    className="collection-link"
+                    style={{
+                        fontSize: '1.5rem',
+                        marginBottom: '1rem',
+                    }}
+                    onClick={() => window.location.href = `/hic-et-nunc`}
+                >
+                    hic et nunc 
+                </h1>
+            </div>
             {collections.map((collection) => (
                 <div key={collection.contract} style={{ margin: '1rem' }}>
                     <h1
+                        className="collection-link"
                         style={{
-                            fontSize: '2rem',
+                            fontSize: '1.5rem',
                             marginBottom: '1rem',
-                            cursor: 'pointer',
                         }}
                         onClick={() => window.location.href = `/${collection.contract}`}
                     >
@@ -50,6 +77,3 @@ export default function HomePage() {
     );
 }
 
-// • Education
-// • Master’s in creative code Alfred University 2011  
-// • Bachelor’s in Media Arts, SAIC 2008

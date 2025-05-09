@@ -11,12 +11,16 @@ const GET_COLLECTION = gql`
   query MyCollection($contract: String!) {
     token(
       where: { fa_contract: { _eq: $contract } }
+      order_by: { token_id: desc }
     ) {
       token_id
       display_uri
       artifact_uri
       name
       description
+      holders {
+        holder_address
+      }
       fa {
         name
       }
@@ -34,15 +38,22 @@ export default function ObjktGallery() {
     client
       .request(GET_COLLECTION, { contract: collection })
       .then((data) => {
-        const cleaned = data.token.map((t) => {
-          return {
+        console.log(data,"data");
+        
+        const cleaned = data.token
+          .filter(t =>
+            !(
+              t.holders &&
+              t.holders.some(h => h.holder_address === "tz1burnburnburnburnburnburnburjAYjjX")
+            )
+          )
+          .map((t) => ({
             full: t.artifact_uri.replace('ipfs://', 'https://ipfs.io/ipfs/'),
             thumbnail: t.display_uri.replace('ipfs://', 'https://ipfs.io/ipfs/'),
             name: t.name || 'Unknown',
             desc: t.description || 'No description',
             collectionName: t.fa?.name || 'Unknown Collection',
-          };
-        });
+          }));
         setItems(cleaned);
       })
       .catch(console.error);

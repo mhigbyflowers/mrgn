@@ -14,7 +14,7 @@ export default function ItemDetail() {
   }, [item, fileType, navigate, collection]);
 
   const handleBack = () => {
-    navigate(`/${collection}`);
+   navigate(-1); // Go back to the previous page`);
   };
 
   const isVideo = fileType && fileType.startsWith('video');
