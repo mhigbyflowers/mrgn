@@ -1,27 +1,46 @@
 import React, { useEffect, useState } from 'react';
+import { GraphQLClient, gql } from 'graphql-request';
 
+const endpoint = 'https://data.objkt.com/v3/graphql';
+const GET_CREATOR_COLLECTIONS = gql`
+  query GetCreatorCollections($creator: String!) {
+    fa(where: {
+      creator_address: { _eq: $creator },
+      live: { _eq: true }
+    }) {
+      contract
+      live
+      name
+      creator_address
+    }
+  }
+`;
 
 export default function HomePage() {
-    const collections = [
-        { name: 'Hue', kt1: 'KT1Shm1ELtPCpZ5yaUeXJuVSek8x3UuymLuJ' },
-        { name: 'YardWork', kt1: 'KT1NMayQZJMuZFTPSSskTqj82rhogNjgStSw' },
-        { name: 'YY.MM.DD-@-HH.MM.SS', kt1: 'KT1FqzZT7RjgyEKAQmY46oYK4GE2hoxQGCz2' },
-        { name: 'Timonds', kt1: 'KT1HDUSHEW1pKSbdHUWW9awkuKGJFsQvfQbq' },
-        { name: 'net', kt1: 'KT1BdfVyJMvFCCJd6PBzcJjPERLgXfwRiRTN' },
+    const [collections, setCollections] = useState([]);
+    const creator = "tz1YrA1XwPqiVVC7L2hVapAbq2bm9aaGZtKQ";
 
-    ]
+    useEffect(() => {
+        const client = new GraphQLClient(endpoint);
+        client
+          .request(GET_CREATOR_COLLECTIONS, { creator })
+          .then((data) => {
+            setCollections(data.fa || []);
+          })
+          .catch(console.error);
+    }, []);
+
     return (
         <div style={{ textAlign: 'center', padding: '1rem' }}>
-            
             {collections.map((collection) => (
-                <div key={collection.kt1} style={{ margin: '1rem' }}>
+                <div key={collection.contract} style={{ margin: '1rem' }}>
                     <h1
                         style={{
                             fontSize: '2rem',
                             marginBottom: '1rem',
                             cursor: 'pointer',
                         }}
-                        onClick={() => window.location.href = `/${collection.kt1}`}
+                        onClick={() => window.location.href = `/${collection.contract}`}
                     >
                         {collection.name}
                     </h1>
@@ -30,3 +49,7 @@ export default function HomePage() {
         </div>
     );
 }
+
+// • Education
+// • Master’s in creative code Alfred University 2011  
+// • Bachelor’s in Media Arts, SAIC 2008
