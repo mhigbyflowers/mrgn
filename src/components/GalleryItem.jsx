@@ -24,7 +24,7 @@ export default function GalleryItem({ item }) {
   
   if ( collection === undefined || collection === null) {
     collection = "hicetnunc";
- provided
+
   }
 
   
