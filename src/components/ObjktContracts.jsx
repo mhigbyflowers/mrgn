@@ -46,7 +46,7 @@ export default function ObjktContracts() {
                 }
                 `}
             </style>
-            <h1 style={{ textAlign:'left',fontSize: '2rem', marginBottom: '1rem', marginTop:'0' }}>NFTs (tezo)</h1>
+            <h1 style={{ textAlign:'left',fontSize: '2rem', marginBottom: '1rem', marginTop:'0' }}>Collections</h1>
             <div style={{ margin: '1rem' }}>
                 <h1
                     className="collection-link"
