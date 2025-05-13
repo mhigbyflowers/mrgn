@@ -111,7 +111,7 @@ export default function Gallery({ customHolder, customFa, title }) {
   }, [fa, holder, title, collection]);
 
   const handleBack = () => {
-    navigate(-1);
+    navigate("/");
   };
 
   return (
