@@ -5,17 +5,14 @@ export default function ItemDetail() {
   const location = useLocation();
   const navigate = useNavigate();
   const { collection } = useParams();
+  const effectiveCollection = collection ?? "hicetnunc";
   const { item, fileType } = location.state || {};
-
-  if ( collection === "undefined" || collection === "null") {
-    collection = "hicetnunc"; // Default collection if none is provided
-  }
 
   useEffect(() => {
     if (!item || !fileType) {
-      navigate(`/${collection}`); // Redirect to collection view if state is missing
+      navigate(`/${effectiveCollection}`); // Redirect to collection view if state is missing
     }
-  }, [item, fileType, navigate, collection]);
+  }, [item, fileType, navigate, effectiveCollection]);
 
   const handleBack = () => {
    navigate(-1); // Go back to the previous page`);
@@ -61,7 +58,7 @@ export default function ItemDetail() {
               />
             )}
           </div>
-          <a href={"https://objkt.com/tokens/" + collection + "/" + item.tokenId} target="_blank" rel="noopener noreferrer">Objkt</a>
+          <a href={"https://objkt.com/tokens/" + effectiveCollection + "/" + item.tokenId} target="_blank" rel="noopener noreferrer">Objkt</a>
         </>
       )}
     </div>

@@ -91,11 +91,42 @@ export default function Gallery({ customHolder, customFa, title }) {
           tokens = tokens.filter(
             t => !(t.creators && t.creators[0] && t.creators[0].creator_address !== holder)
           );
+
+          
         } else {
+          console.log(tokens);
+          
           // For collection gallery, filter out NFTs where any holder is the burn address
-        //   tokens = tokens.filter(
-        //     t => !(t.holders && t.holders.some(h => h.holder_address === "tz1burnburnburnburnburnburnburjAYjjX"))
-        //   );
+            tokens = tokens.filter(
+            t => {
+              const holderAddresses = t.holders?.map(h => h.holder_address) || [];
+              // Filter out tokens where holders are ONLY the two burn addresses
+              const burnAddresses = [
+              "tz1burnburnburnburnburnburnburjAYjjX",
+              "tz1YrA1XwPqiVVC7L2hVapAbq2bm9aaGZtKQ"
+              ];
+              const burnAddresses1 = [
+              "tz1burnburnburnburnburnburnburjAYjjX",
+              "tz1YrA1XwPqiVVC7L2hVapAbq2bm9aaGZtKQ",
+              "KT1FvqJwEDWb1Gwc55Jd1jjTHRVWbYKUUpyq"
+              ];
+              // If every holder is a burn address and there are exactly two holders, filter out
+              if (
+              holderAddresses.length === 2 &&
+              burnAddresses.every(addr => holderAddresses.includes(addr)) &&
+              holderAddresses.every(addr => burnAddresses.includes(addr))
+              ) {
+              return false;
+              } else if (
+                holderAddresses.length === 3 &&
+              burnAddresses.every(addr => holderAddresses.includes(addr)) &&
+              holderAddresses.every(addr => burnAddresses1.includes(addr))
+              ) {
+              return false;
+              }
+              return true;
+            }
+            );
         }
         const cleaned = tokens.map((t) => ({
           full: t.artifact_uri?.replace('ipfs://', 'https://ipfs.io/ipfs/'),
