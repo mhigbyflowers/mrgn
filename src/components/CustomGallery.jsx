@@ -25,10 +25,12 @@ const GET_CUSTOM_GALLERY = gql`
   }
 `;
 
+const IPFS_GATEWAY = import.meta.env.VITE_IPFS_GATEWAY || 'https://ipfs.io/ipfs/';
+
 export default function CustomGallery() {
     const [items, setItems] = useState([]);
-    const fa = "KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton";
-    const holder = "tz1YrA1XwPqiVVC7L2hVapAbq2bm9aaGZtKQ";
+  const fa = import.meta.env.VITE_HEN_FA || "KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton";
+  const holder = import.meta.env.VITE_CREATOR_ADDRESS || "tz1YrA1XwPqiVVC7L2hVapAbq2bm9aaGZtKQ";
     const navigate = useNavigate();
     useEffect(() => {
         const client = new GraphQLClient(endpoint);
@@ -41,19 +43,19 @@ export default function CustomGallery() {
                         return null;
                     }
                     let meta = {};
-                    if (typeof t.metadata === 'string') {
-                        try { meta = JSON.parse(t.metadata); } catch {}
+          if (typeof t.metadata === 'string') {
+            try { meta = JSON.parse(t.metadata); } catch (e) { /* ignore parse errors */ }
                     } else if (typeof t.metadata === 'object' && t.metadata !== null) {
                         meta = t.metadata;
                     }
                     let full = '';
                     let thumbnail = '';
-                    if (t.artifact_uri) {
-                        full = t.artifact_uri.replace('ipfs://', 'https://ipfs.io/ipfs/');
-                    }
-                    if (t.display_uri) {
-                        thumbnail =t.display_uri.replace('ipfs://', 'https://ipfs.io/ipfs/');
-                    }
+          if (t.artifact_uri) {
+            full = t.artifact_uri.replace('ipfs://', IPFS_GATEWAY);
+          }
+          if (t.display_uri) {
+            thumbnail = t.display_uri.replace('ipfs://', IPFS_GATEWAY);
+          }
                     
                     return {
                         full,
@@ -61,13 +63,13 @@ export default function CustomGallery() {
                         name: t.name || meta.name || 'Unknown',
                         desc: t.description || 'No description',
                         collectionName: 'Custom Gallery',
-                       
+                        tokenId: t.token_id,
                     };
                 }).filter(Boolean); // Remove nulls
                 setItems(cleaned);
             })
             .catch(console.error);
-    }, []);
+  }, [fa, holder]);
     const handleBack = () => {
         navigate(-1);
       };

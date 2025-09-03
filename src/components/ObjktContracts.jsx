@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { GraphQLClient, gql } from 'graphql-request';
+import { useNavigate } from 'react-router-dom';
 import  CustomGallery  from './CustomGallery';
 
 const endpoint = 'https://data.objkt.com/v3/graphql';
@@ -19,7 +20,8 @@ const GET_CREATOR_COLLECTIONS = gql`
 
 export default function ObjktContracts() {
     const [collections, setCollections] = useState([]);
-    const creator = "tz1YrA1XwPqiVVC7L2hVapAbq2bm9aaGZtKQ";
+    const navigate = useNavigate();
+    const creator = import.meta.env.VITE_CREATOR_ADDRESS || "tz1YrA1XwPqiVVC7L2hVapAbq2bm9aaGZtKQ";
 
     useEffect(() => {
         const client = new GraphQLClient(endpoint);
@@ -54,7 +56,7 @@ export default function ObjktContracts() {
                         fontSize: '1.5rem',
                         marginBottom: '1rem',
                     }}
-                    onClick={() => window.location.href = `/hicetnunc`}
+                    onClick={() => navigate('/hicetnunc')}
                 >
                     hic et nunc 
                 </h1>
@@ -67,7 +69,7 @@ export default function ObjktContracts() {
                             fontSize: '1.5rem',
                             marginBottom: '1rem',
                         }}
-                        onClick={() => window.location.href = `/${collection.contract}`}
+                        onClick={() => navigate(`/${collection.contract}`)}
                     >
                         {collection.name}
                     </h1>

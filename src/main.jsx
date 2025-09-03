@@ -13,8 +13,8 @@ const AppRoutes = () => (
       <Route path="/:collection" element={<Gallery />} />
       <Route path="/hicetnunc" element={
         <Gallery
-          customFa="KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton"
-          customHolder="tz1YrA1XwPqiVVC7L2hVapAbq2bm9aaGZtKQ"
+          customFa={import.meta.env.VITE_HEN_FA || 'KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton'}
+          customHolder={import.meta.env.VITE_CREATOR_ADDRESS || 'tz1YrA1XwPqiVVC7L2hVapAbq2bm9aaGZtKQ'}
           title="hic et nunc (hen)"
         />
       } />

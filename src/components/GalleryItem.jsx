@@ -2,13 +2,30 @@ import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
+function guessFromExtension(url) {
+  try {
+    const u = new URL(url);
+    const pathname = u.pathname || '';
+    const lower = pathname.toLowerCase();
+    if (lower.endsWith('.mp4')) return 'video/mp4';
+    if (lower.endsWith('.webm')) return 'video/webm';
+    if (lower.endsWith('.mov')) return 'video/quicktime';
+    if (lower.endsWith('.gif')) return 'image/gif';
+    if (lower.endsWith('.png')) return 'image/png';
+    if (lower.endsWith('.jpg') || lower.endsWith('.jpeg')) return 'image/jpeg';
+  } catch {}
+  return null;
+}
+
 async function getFileType(url) {
   try {
     const response = await axios.head(url);
     return response.headers['content-type'];
-  } catch (error) {
-    console.error('Error fetching file type:', error);
-    return null;
+  } catch (e) {
+    // Fallback: infer from extension if HEAD fails (common with some gateways)
+    const guessed = guessFromExtension(url);
+    if (!guessed) console.debug('Could not determine file type from HEAD or extension');
+    return guessed;
   }
 }
 
@@ -22,7 +39,7 @@ export default function GalleryItem({ item }) {
   let { collection } = useParams();
   console.log(collection, "collection");
   
-  if ( collection === undefined || collection === null) {
+  if (collection === undefined || collection === null || collection === 'undefined' || collection === 'null') {
     collection = "hicetnunc";
 
   }
@@ -31,8 +48,9 @@ export default function GalleryItem({ item }) {
   const handleClick = async () => {
     console.log(collection,"collection");
     const fileType = await getFileType(item.full);
-    const name = replaceSpaces(item.name);
-    navigate(`/${collection}/${name}`, { state: { item, fileType } });
+  const name = replaceSpaces(item.name);
+  const pathId = item.tokenId ? String(item.tokenId) : name;
+  navigate(`/${collection}/${pathId}`, { state: { item, fileType } });
   };
 
   return (

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { GraphQLClient, gql } from 'graphql-request';
 import GalleryItem from './GalleryItem';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const endpoint = 'https://data.objkt.com/v3/graphql';
 
@@ -34,10 +34,12 @@ const GET_TOKENS = gql`
   }
 `;
 
+const IPFS_GATEWAY = import.meta.env.VITE_IPFS_GATEWAY || 'https://ipfs.io/ipfs/';
+
 export default function Gallery({ customHolder, customFa, title }) {
   let { collection } = useParams();
-    if ( collection === "undefined" || collection === "null") {
-    collection = "hicetnunc"; // Default collection if none is provided
+  if (!collection || collection === 'undefined' || collection === 'null') {
+    collection = 'hicetnunc'; // Default collection if none is provided
   }
   const navigate = useNavigate();
   const [items, setItems] = useState([]);
@@ -82,10 +84,10 @@ export default function Gallery({ customHolder, customFa, title }) {
         }
       }
     `;
-    client
+  client
       .request(dynamicQuery, variables)
       .then((data) => {
-        let tokens = data.token || [];
+    let tokens = data?.token || [];
         // For custom gallery, filter out NFTs where creator is the holder
         if (holder) {
           tokens = tokens.filter(
@@ -129,8 +131,8 @@ export default function Gallery({ customHolder, customFa, title }) {
             );
         }
         const cleaned = tokens.map((t) => ({
-          full: t.artifact_uri?.replace('ipfs://', 'https://ipfs.io/ipfs/'),
-          thumbnail: t.display_uri?.replace('ipfs://', 'https://ipfs.io/ipfs/'),
+          full: t.artifact_uri?.replace('ipfs://', IPFS_GATEWAY),
+          thumbnail: t.display_uri?.replace('ipfs://', IPFS_GATEWAY),
           name: t.name || 'Unknown',
           desc: t.description || 'No description',
           collectionName: t.fa?.name || title || 'Custom Gallery',
